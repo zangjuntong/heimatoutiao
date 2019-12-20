@@ -8,8 +8,8 @@
         <el-form-item prop="mobile">
         <el-input v-model="loginForm.mobile" placeholder='请输入手机号'></el-input>
       </el-form-item>
-       <el-form-item prop="passward">
-        <el-input v-model="loginForm.passward" style="width:65%" placeholder='请输入验证码'></el-input>
+       <el-form-item prop="code">
+        <el-input v-model="loginForm.code" style="width:65%" placeholder='请输入验证码'></el-input>
       <el-button plain style="float:right">发送验证码</el-button>
       </el-form-item>
       <el-form-item prop="checkbox">
@@ -32,13 +32,13 @@ export default {
     return {
       loginForm: {
         mobile: '',
-        passward: '',
+        code: '',
         checkbox: false
       },
       loginrules: {
         mobile: [{ required: true, message: '请输入手机号' },
           { pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确' }],
-        passward: [{ required: true, message: '请输入验证码' },
+        code: [{ required: true, message: '请输入验证码' },
           { pattern: /^\d{6}$/, message: '验证码不正确' }],
         checkbox: [{ validator: function (rule, value, callback) {
           if (value) {
@@ -52,9 +52,22 @@ export default {
   },
   methods: {
     submitLogin () {
-      this.$refs.myform.validate(function (isok) {
+      this.$refs.myform.validate((isok) => {
         if (isok) {
-          console.log('通过')
+          this.$axios({
+            url: '/authorizations',
+            method: 'post',
+            data: this.loginForm
+          }).then(result => {
+            let tokens = result.data.data.token
+            window.localStorage.setItem('user-token', tokens)
+            this.$router.push('/')
+          }).catch(() => {
+            this.$message({
+              message: '账号或密码不正确',
+              type: 'warning'
+            })
+          })
         }
       })
     }

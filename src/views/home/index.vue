@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <p>主页</p>
-  </div>
+  <el-container>
+    <el-aside></el-aside>
+  </el-container>
 </template>
 
 <script>
