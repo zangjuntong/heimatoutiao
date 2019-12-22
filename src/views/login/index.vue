@@ -59,14 +59,9 @@ export default {
             method: 'post',
             data: this.loginForm
           }).then(result => {
-            let tokens = result.data.data.token
+            let tokens = result.data.token
             window.localStorage.setItem('user-token', tokens)
             this.$router.push('/')
-          }).catch(() => {
-            this.$message({
-              message: '账号或密码不正确',
-              type: 'warning'
-            })
           })
         }
       })

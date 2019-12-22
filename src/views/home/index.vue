@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside style="width:200px">
+    <el-aside style="min-height: 100vh; width:200px; background-color: #323745;">
       <silde-right></silde-right>
     </el-aside>
     <el-container>

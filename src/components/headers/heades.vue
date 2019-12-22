@@ -6,7 +6,7 @@
       </el-col>
     <el-col class="right" :span="12" style="float:right" >
       <el-row style="float:right"  type="flex" align="middle">
-        <img :src="!usermes.photo?usermes.photo:bianImmg" alt="">
+        <img :src="usermes.photo?usermes.photo:bianImmg" alt="">
         <el-dropdown trigger="click" @command='xianshi'>
           <span>{{usermes.name}}</span>
           <el-dropdown-menu slot="dropdown">
@@ -31,15 +31,12 @@ export default {
     }
   },
   created () {
-    let token = localStorage.getItem('user-token')
     this.$axios({
-      url: '/user/profile',
-      headers: {
-        Authorization: 'Bearer ' + token
-      }
+      url: '/user/profile'
+
     }).then(res => {
       console.log(res)
-      this.usermes = res.data.data
+      this.usermes = res.data
     })
   },
   methods: {

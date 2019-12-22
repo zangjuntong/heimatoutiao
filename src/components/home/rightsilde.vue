@@ -46,7 +46,7 @@ export default {
 
 <style  lang='less' scoped>
 .silde {
-  height: 100vh;
+  min-height: 100vh;
   background-color: #323745;
   width: 200px;
   .el-menu {
