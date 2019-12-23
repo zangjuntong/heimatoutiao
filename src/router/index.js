@@ -17,6 +17,9 @@ const routes = [
     }, {
       path: 'comment',
       component: () => import('../views/comments')
+    }, {
+      path: 'material',
+      component: () => import('../views/sucai')
     }]
   }, {
     path: '/login',

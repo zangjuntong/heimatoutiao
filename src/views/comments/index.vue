@@ -1,5 +1,5 @@
 <template>
-<el-card>
+<el-card v-loading="loading">
   <bread-crum slot="header">
   <template slot="title">
     评论管理
@@ -19,6 +19,17 @@
       </el-table-column>
 
     </el-table>
+    <el-row type='flex' justify='center' align="middle" style="height:80px">
+      <el-pagination
+  :page-size='page.pageSize'
+  :current-page='currentPage'
+  background
+  layout="prev, pager, next"
+  @current-change='pagechange'
+  :total="page.total">
+</el-pagination>
+    </el-row>
+
 </el-card>
 
 </template>
@@ -27,16 +38,30 @@
 export default {
   data () {
     return {
-      list: []
+      list: [],
+      loading: false,
+      page: {
+        total: '0',
+        pageSize: '10',
+        currentPage: '1'
+      }
+
     }
   },
   methods: {
+    pagechange (newpage) {
+      this.page.currentPage = newpage
+      this.getMessage()
+    },
     getMessage () {
+      this.loading = true
       this.$axios({
         url: '/articles',
-        params: { response_type: 'comment' }
+        params: { response_type: 'comment', page: this.page.currentPage, per_page: this.page.pageSize }
       }).then(res => {
         this.list = res.data.results
+        this.page.total = res.data.total_count
+        this.loading = false
       })
     },
     formater (row, column, cellValue, index) {
@@ -52,7 +77,7 @@ export default {
         this.$axios({
           url: '/comments/status',
           method: 'put',
-          params: { article_id: row.id },
+          params: { article_id: row.id.toString() },
           data: { allow_comment: !row.comment_status }
         }).then(res => {
           this.getMessage()
