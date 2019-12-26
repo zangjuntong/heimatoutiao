@@ -20,6 +20,12 @@ const routes = [
     }, {
       path: 'material',
       component: () => import('../views/sucai')
+    }, {
+      path: 'articles',
+      component: () => import('../views/cointer')
+    }, {
+      path: 'publish',
+      component: () => import('../views/publish')
     }]
   }, {
     path: '/login',
