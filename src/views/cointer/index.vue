@@ -51,7 +51,7 @@
         </div>
       </div>
       <div class="right">
-        <span><i class="el-icon-edit"></i>修改</span>
+        <span @click="xiugai(item.id)"><i class="el-icon-edit"></i>修改</span>
         <span @click="delartical(item.id)"><i class="el-icon-delete"></i>删除</span>
       </div>
     </div>
@@ -120,6 +120,9 @@ export default {
     }
   },
   methods: {
+    xiugai (id) {
+      this.$router.push(`/home/publish/${id.toString()}`)
+    },
     delartical (id) {
       this.$confirm('你是否确认删除？').then(() => {
         this.$axios({
