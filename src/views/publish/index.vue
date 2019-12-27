@@ -11,13 +11,14 @@
         <quill-editor v-model="formDate.content" style="height:300px"></quill-editor>
       </el-form-item>
       <el-form-item  style="margin-top:120px" prop='cover' label='封面'>
-        <el-radio-group v-model="formDate.cover.type">
+        <el-radio-group @change='changeype' v-model="formDate.cover.type">
           <el-radio :label='1'>单图</el-radio>
           <el-radio :label='3'>三图</el-radio>
           <el-radio :label='0'>无图</el-radio>
           <el-radio :label='-1'>自动</el-radio>
         </el-radio-group>
       </el-form-item>
+      <cover-image :list='formDate.cover.images'></cover-image>
       <el-form-item prop='channel_id' label='频道'>
         <el-select v-model="formDate.channel_id" placeholder="请选择">
             <el-option
@@ -97,10 +98,8 @@ export default {
         this.loading = false
         this.formDate = res.data
       })
-    }
-  },
-  watch: {
-    'formDate.cover.type': function () {
+    },
+    changeype () {
       if (this.formDate.cover.type === 0 || this.formDate.cover.type === -1) {
         this.formDate.cover.images = []
       } else if (this.formDate.cover.type === 1) {
@@ -108,7 +107,18 @@ export default {
       } else if (this.formDate.cover.type === 3) {
         this.formDate.cover.images = ['', '', '']
       }
-    },
+    }
+  },
+  watch: {
+    // 'formDate.cover.type': function () {
+    //   if (this.formDate.cover.type === 0 || this.formDate.cover.type === -1) {
+    //     this.formDate.cover.images = []
+    //   } else if (this.formDate.cover.type === 1) {
+    //     this.formDate.cover.images = ['']
+    //   } else if (this.formDate.cover.type === 3) {
+    //     this.formDate.cover.images = ['', '', '']
+    //   }
+    // },
     $route: function (to, from) {
       // debugger
       // console.log(to, from)
