@@ -18,7 +18,7 @@
           <el-radio :label='-1'>自动</el-radio>
         </el-radio-group>
       </el-form-item>
-      <cover-image :list='formDate.cover.images'></cover-image>
+      <cover-image @selectimg='recieves' :list='formDate.cover.images'></cover-image>
       <el-form-item prop='channel_id' label='频道'>
         <el-select v-model="formDate.channel_id" placeholder="请选择">
             <el-option
@@ -64,6 +64,9 @@ export default {
     }
   },
   methods: {
+    recieves (url, index) {
+      this.formDate.cover.images = this.formDate.cover.images.map((item, i) => i === index ? url : item)
+    },
     getpindao () {
       this.$axios({
         url: '/channels'

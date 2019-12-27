@@ -1,15 +1,15 @@
 <template>
   <div class="fengmian">
-    <div @click="opendialog" class="coverimg" v-for="(item,index) in list" :key="index">
+    <div @click="opendialog(index)" class="coverimg" v-for="(item,index) in list" :key="index">
       <img :src="item?item:imgagesitem" alt="">
     </div>
     <el-dialog
-      title="选择封面图片"
       :visible="dialogVisible"
       @close='closedialog'
-      width="30%"
-      :before-close="handleClose">
-      <span>这是一段信息</span>
+      width="60%"
+     >
+      <select-image @selectimg='recieves'></select-image>
+
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -24,12 +24,18 @@ export default {
   data () {
     return {
       imgagesitem: require('../../assets/img/pic_bg.png'),
-      dialogVisible: false
+      dialogVisible: false,
+      selectindex: -1
     }
   },
   methods: {
-    opendialog () {
+    recieves (url) {
+      this.$emit('selectimg', url, this.selectindex)
+      this.closedialog()
+    },
+    opendialog (index) {
       this.dialogVisible = true
+      this.selectindex = index
     },
     closedialog () {
       this.dialogVisible = false
