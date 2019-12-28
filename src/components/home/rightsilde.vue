@@ -29,8 +29,8 @@
           <el-menu-item index="/home/fanslist">粉丝列表</el-menu-item>
         </el-menu-item-group>
     </el-submenu>
-    <el-menu-item>
-     <span slot="title" index="usermssage">账户信息</span>
+    <el-menu-item index="/home/usermssage">
+     <span slot="title" index="/home/usermssage">账户信息</span>
     </el-menu-item>
   </el-menu>
 

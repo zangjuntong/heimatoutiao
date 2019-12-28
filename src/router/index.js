@@ -29,6 +29,9 @@ const routes = [
     }, {
       path: 'publish/:articalId',
       component: () => import('../views/publish')
+    }, {
+      path: 'usermssage',
+      component: () => import('../views/userinfo')
     }]
   }, {
     path: '/login',

@@ -12,8 +12,8 @@
     <el-tabs v-model="activeName" @tab-click="changeTab">
       <el-tab-pane label="全部图片" name="all">
         <div class="quan">
-          <el-card class="hang" v-for="item in list" :key="item.id">
-            <img :src="item.url" alt />
+          <el-card class="hang" v-for="(item,index) in list" :key="item.id">
+            <img @click="opendialog(index)" :src="item.url" alt />
             <el-row class="iconshan" type="flex" align="middle" justify="space-around">
               <i @click="shoucang(item)" :style="{color:item.is_collected?'red':'#000'}" class="el-icon-star-on"></i>
               <i @click="delpic(item.id)" class="el-icon-delete-solid"></i>
@@ -38,8 +38,23 @@
         @current-change="pagechange"
         :total="page.total"
       ></el-pagination>
-
     </el-row>
+    <el-dialog
+     @close="dialogVisible= false"
+      :visible="dialogVisible"
+      width="60%"
+      @opened='openEnd'
+      >
+      <el-carousel ref='mycarousel' type="card" height="400px">
+        <el-carousel-item v-for="item in list" :key="item.id">
+          <img style="width:100%;height:100%;" :src="item.url" alt="">
+        </el-carousel-item>
+      </el-carousel>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </el-card>
 </template>
 
@@ -47,6 +62,7 @@
 export default {
   data () {
     return {
+      dialogVisible: false,
       loading: false,
       activeName: 'all',
       list: [],
@@ -54,10 +70,18 @@ export default {
         total: 0,
         pageSize: 8,
         currpage: 1
-      }
+      },
+      clickindex: -1
     }
   },
   methods: {
+    openEnd () {
+      this.$refs.mycarousel.setActiveItem(this.clickindex)
+    },
+    opendialog (index) {
+      this.dialogVisible = true
+      this.clickindex = index
+    },
     delpic (id) {
       this.$confirm('你确定要删除此图片吗？').then(() => {
         this.$axios({

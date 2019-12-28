@@ -22,7 +22,7 @@
     <el-row type='flex' justify='center' align="middle" style="height:80px">
       <el-pagination
   :page-size='page.pageSize'
-  :current-page='currentPage'
+  :current-page='page.currentPage'
   background
   layout="prev, pager, next"
   @current-change='pagechange'
@@ -41,9 +41,9 @@ export default {
       list: [],
       loading: false,
       page: {
-        total: '0',
-        pageSize: '10',
-        currentPage: '1'
+        total: 0,
+        pageSize: 10,
+        currentPage: 1
       }
 
     }

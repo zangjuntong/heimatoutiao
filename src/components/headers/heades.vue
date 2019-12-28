@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import eventBus from '../../utils/eventBus'
 export default {
   data () {
     return {
@@ -31,18 +32,23 @@ export default {
     }
   },
   created () {
-    this.$axios({
-      url: '/user/profile'
-
-    }).then(res => {
-      console.log(res)
-      this.usermes = res.data
+    this.getuserinfo()
+    eventBus.$on('updateUserInfo', () => {
+      this.getuserinfo()
     })
   },
   methods: {
+    getuserinfo () {
+      this.$axios({
+        url: '/user/profile'
+
+      }).then(res => {
+        this.usermes = res.data
+      })
+    },
     xianshi (command) {
       if (command === 'personmes') {
-
+        this.$router.push('/home/usermssage')
       } else if (command === 'gitaddress') {
         window.location.href = 'https://github.com/'
       } else if (command === 'weixin') {
